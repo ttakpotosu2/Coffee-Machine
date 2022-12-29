@@ -1,0 +1,114 @@
+package machine
+
+class CoffeeMachine {
+    fun userInput(mainInput: String) {
+
+        when (mainInput) {
+            "buy" -> buy()
+            "fill" -> fill()
+            "take" -> take()
+            "remaining" -> printResources(water, milk, coffeeBeans, disposableCups, money)
+        }
+
+    }
+
+    private fun take() {
+        println("I gave you $$money")
+        money = 0
+    }
+
+    private fun fill() {
+        println("Write how many ml of water you want to add:")
+        val waterInput = readln().toInt()
+
+        println("Write how many ml of milk you want to add: ")
+        val milkInput = readln().toInt()
+
+        println("Write how many grams of coffee beans you want to add:")
+        val coffeeBeansInput = readln().toInt()
+
+        println("Write how many disposable cups you want to add:")
+        val disposableCupsInput = readln().toInt()
+
+        water += waterInput
+        milk += milkInput
+        coffeeBeans += coffeeBeansInput
+        disposableCups += disposableCupsInput
+    }
+
+    private fun printResources(
+        water: Int,
+        milk: Int,
+        coffeeBeans: Int,
+        disposableCups: Int,
+        money: Int
+    ) {
+        println("The coffee machine has:")
+        println("$water ml of water")
+        println("$milk ml of milk")
+        println("$coffeeBeans g of coffee beans")
+        println("$disposableCups disposable cups")
+        println("$$money of money")
+    }
+
+    private fun buy() {
+        println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main Menu:")
+
+        when (readln()) {
+            "1" -> {
+                if (water >= 250 && coffeeBeans >= 16 && disposableCups > 0) {
+                    println("I have enough resources, making you a coffee!")
+
+                    water -= 250
+                    coffeeBeans -= 16
+                    disposableCups -= 1
+                    money += 4
+                } else {
+                    when (minOf(water, coffeeBeans, disposableCups)) {
+                        water -> println("Sorry, not enough water")
+                        coffeeBeans -> println("Sorry, not enough coffee beans")
+                        disposableCups -> println("Sorry, not enough disposable cups")
+                    }
+                }
+            }
+
+            "2" -> {
+                if (water >= 350 && milk >= 75 && coffeeBeans >= 20 && disposableCups > 0) {
+                    println("I have enough resources, making you a coffee!")
+
+                    water -= 350
+                    milk -= 75
+                    coffeeBeans -= 20
+                    disposableCups -= 1
+                    money += 7
+                } else {
+                    when (minOf(water, coffeeBeans, milk, disposableCups)) {
+                        water -> println("Sorry, not enough water")
+                        coffeeBeans -> println("Sorry, not enough coffee beans")
+                        milk -> println("Sorry, not enough milk")
+                        disposableCups -> println("Sorry, not enough disposable cups")
+                    }
+                }
+            }
+
+            "3" -> {
+                if (water >= 200 && milk >= 100 && coffeeBeans >= 12 && disposableCups > 0) {
+                    println("I have enough resources, making you a coffee!")
+
+                    water -= 200
+                    milk -= 100
+                    coffeeBeans -= 12
+                    disposableCups -= 1
+                    money += 6
+                } else {
+                    when (minOf(water, coffeeBeans, milk, disposableCups)) {
+                        water -> println("Sorry, not enough water")
+                        coffeeBeans -> println("Sorry, not enough coffee beans")
+                        milk -> println("Sorry, not enough milk")
+                        disposableCups -> println("Sorry, not enough disposable cups")
+                    }
+                }
+            }
+        }
+    }
+}
